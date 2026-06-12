@@ -379,9 +379,12 @@ nav.scrolled{
 
 /* ── RESERVE ── */
 #reserve{
-  background:var(--black);
+  background:
+    radial-gradient(900px 380px at 50% -8%, rgba(200,184,154,.10), transparent 70%),
+    var(--black);
   padding:110px 56px;
   text-align:center;color:var(--white);
+  position:relative;
 }
 #reserve .section-tag{justify-content:center;display:flex}
 #reserve p.reserve-intro{
@@ -430,9 +433,13 @@ nav.scrolled{
   grid-column:1/-1;text-align:center;
 }
 .or-call{
-  margin-top:30px;font-size:13px;color:var(--muted);
+  width:max-content;max-width:90%;
+  margin:40px auto 0;padding-top:30px;
+  border-top:1px solid rgba(200,184,154,.12);
+  font-size:13px;color:var(--muted);
 }
-.or-call a{color:var(--beige);text-decoration:none;font-size:17px;font-weight:500;display:block;margin-top:4px}
+.or-call a{color:var(--beige);text-decoration:none;font-size:19px;font-weight:500;display:block;margin-top:6px;transition:color .2s}
+.or-call a:hover{color:var(--white)}
 
 /* ── RESERVE SPLIT ── */
 .reserve-split{
@@ -453,35 +460,58 @@ nav.scrolled{
   margin:0 0 14px;line-height:1.7;max-width:none;
 }
 .reserve-btns{
-  display:flex;flex-direction:row;gap:20px;justify-content:center;flex-wrap:wrap;
+  display:flex;flex-direction:row;gap:24px;justify-content:center;flex-wrap:wrap;
+  margin-top:8px;
 }
 .reserve-card-btn{
+  position:relative;overflow:hidden;
   display:flex;flex-direction:column;align-items:center;
-  width:240px;padding:36px 24px;
-  background:rgba(200,184,154,.06);
-  border:1px solid rgba(200,184,154,.2);
+  width:280px;padding:46px 28px 38px;
+  background:linear-gradient(180deg, rgba(200,184,154,.09), rgba(200,184,154,.02));
+  border:1px solid rgba(200,184,154,.18);
   text-decoration:none;color:var(--white);
-  transition:.25s;
+  transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
 }
+.reserve-card-btn::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg, transparent, var(--beige), transparent);
+  transform:scaleX(0);transition:transform .35s ease;
+}
+.reserve-card-btn:hover::before{transform:scaleX(1)}
 .reserve-card-btn:hover{
-  background:rgba(200,184,154,.12);
-  border-color:var(--beige);
-  transform:translateY(-4px);
+  background:linear-gradient(180deg, rgba(200,184,154,.15), rgba(200,184,154,.04));
+  border-color:rgba(200,184,154,.5);
+  transform:translateY(-6px);
+  box-shadow:0 22px 45px -20px rgba(0,0,0,.8);
 }
-.reserve-card-btn .rcb-icon{font-size:36px;margin-bottom:16px;line-height:1;}
+.reserve-card-btn .rcb-icon{
+  font-size:30px;line-height:1;margin-bottom:20px;
+  width:74px;height:74px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(200,184,154,.25);border-radius:50%;
+  background:rgba(200,184,154,.05);
+  transition:transform .3s ease, border-color .3s ease, background .3s ease;
+}
+.reserve-card-btn:hover .rcb-icon{
+  border-color:var(--beige);
+  background:rgba(200,184,154,.12);
+  transform:scale(1.06);
+}
 .reserve-card-btn .rcb-title{
   font-family:'Bebas Neue',sans-serif;
-  font-size:20px;letter-spacing:2px;
-  color:var(--beige);margin-bottom:6px;
+  font-size:22px;letter-spacing:2px;
+  color:var(--beige);margin-bottom:8px;
 }
 .reserve-card-btn .rcb-sub{
   font-size:11px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--muted);
+  color:var(--muted);transition:color .3s ease, letter-spacing .3s ease;
 }
+.reserve-card-btn:hover .rcb-sub{color:var(--beige);letter-spacing:3px}
 .reserve-system-note{
-  margin-top:16px;font-size:11px;
+  margin-top:22px;font-size:11px;
   color:#9a8a7a;letter-spacing:1px;
 }
+.reserve-system-note::before{content:'\1F512  ';}
 /* poptávkový formulář */
 .poptavka-form{
   max-width:680px;margin:0 auto;
@@ -1617,7 +1647,7 @@ footer p{font-size:12px;color:rgba(245,242,238,.2);letter-spacing:.5px}
   <span class="section-tag" style="justify-content:center;display:flex;color:var(--beige-d)">Salonek &amp; větší akce</span>
   <h2 class="section-h" style="color:#1a1410;text-align:center">Poptávkový <em style="color:var(--beige-d)">formulář</em></h2>
   <p class="poptavka-intro">Popište nám vaši představu a my se vám ozveme do 24 hodin.<br>Poptávka bude zaslána přímo vedoucí restaurace.</p>
-  <form class="poptavka-form" name="poptavka" netlify netlify-honeypot="bot-field">
+  <form class="poptavka-form" name="poptavka" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="poptavka">
     <p style="display:none"><input name="bot-field"></p>
     <input type="text" name="jmeno" placeholder="Jméno a příjmení" required>
