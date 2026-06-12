@@ -1,0 +1,29 @@
+functionsDirectory = "/Users/Adel/Downloads/smetanova_web/netlify/functions"
+functionsDirectoryOrigin = "config-v1"
+plugins = []
+headers = []
+redirects = []
+
+[build]
+publish = "/Users/Adel/Downloads/smetanova_web"
+publishOrigin = "default"
+functions = "/Users/Adel/Downloads/smetanova_web/netlify/functions"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+node_bundler = "esbuild"

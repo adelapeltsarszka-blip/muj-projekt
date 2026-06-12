@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurace Smetanova — Vsetín</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --black:#0d0d0d;
+  --dark:#141414;
+  --mid:#1c1c1c;
+  --beige:#c8b89a;
+  --beige-l:#ddd0b8;
+  --beige-d:#a89070;
+  --white:#f5f2ee;
+  --muted:rgba(245,242,238,.55);
+  --gold:#c8b89a;
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:22px 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s;
+}
+nav.scrolled{
+  background:rgba(13,13,13,.97);
+  backdrop-filter:blur(12px);
+  padding:14px 56px;
+  border-bottom:1px solid rgba(200,184,154,.12);
+}
+.logo{
+  font-family:'Jost',sans-serif;
+  font-size:17px;letter-spacing:10px;font-weight:200;
+  color:var(--white);text-decoration:none;text-transform:uppercase;
+}
+.logo em{color:var(--beige);font-style:normal;font-weight:200}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  color:rgba(245,242,238,.7);text-decoration:none;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:400;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--beige-l)}
+.nav-btn{
+  border:1px solid var(--beige);color:var(--beige)!important;
+  padding:8px 20px;transition:all .2s!important;
+}
+.nav-btn:hover{background:var(--beige)!important;color:var(--black)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--white);transition:.3s}
+
+/* ── HERO ── */
+#hero{
+  height:100vh;position:relative;
+  display:flex;align-items:center;
+  overflow:hidden;
+}
+/* Spodní fade pro plynulý přechod do sekce O nás */
+#hero::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:220px;
+  background:linear-gradient(to bottom, transparent, var(--black));
+  pointer-events:none;
+  z-index:2;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(110deg,rgba(13,13,13,.88) 40%,rgba(13,13,13,.35) 100%),
+    url('hlavni.png') center/cover no-repeat;
+  animation:zoomIn 14s ease-out both;
+}
+@keyframes zoomIn{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-inner{
+  position:relative;padding:0 56px;max-width:760px;
+  animation:fadeUp 1.2s .3s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--beige);margin-bottom:20px;font-weight:400;
+}
+.hero-tag::before{content:'';width:36px;height:1px;background:var(--beige)}
+.hero-h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(60px,8vw,120px);
+  line-height:.95;letter-spacing:2px;
+  color:var(--white);margin-bottom:8px;
+}
+.hero-h1 em{
+  display:block;color:var(--beige);
+  font-style:normal;
+}
+.hero-sub{
+  color:var(--muted);font-size:15px;line-height:1.8;
+  max-width:460px;margin:24px 0 40px;
+}
+.cta-row{display:flex;gap:16px;flex-wrap:wrap}
+.btn{
+  display:inline-block;text-decoration:none;
+  font-family:'Jost',sans-serif;font-size:11px;
+  letter-spacing:3px;text-transform:uppercase;font-weight:500;
+  padding:15px 38px;transition:.25s;cursor:pointer;border:none;
+}
+.btn-gold{background:var(--beige);color:var(--black)}
+.btn-gold:hover{background:var(--beige-l);transform:translateY(-2px)}
+.btn-outline{
+  border:1px solid rgba(245,242,238,.3);
+  color:var(--white);background:none;
+}
+.btn-outline:hover{border-color:var(--beige);color:var(--beige)}
+.btn-denni{
+  background:transparent;
+  border:2px solid var(--beige);
+  color:var(--beige);
+  letter-spacing:4px;
+}
+.btn-denni:hover{
+  background:var(--beige);
+  color:var(--black);
+}
+.btn-denni span,.btn-denni{position:relative;z-index:1}
+
+/* ── SHARED ── */
+.reveal{opacity:0;transform:translateY(24px);transition:.75s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+.section-tag{
+  font-size:10px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--beige);font-weight:400;display:block;margin-bottom:12px;
+}
+.section-h{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(42px,5vw,72px);
+  letter-spacing:2px;line-height:1;
+}
+.section-h em{color:var(--beige);font-style:normal}
+.divider{width:44px;height:2px;background:var(--beige);margin:18px 0 26px}
+
+/* ── ABOUT ── */
+#about{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:80vh;
+  background:var(--black);
+}
+.about-images{
+  position:relative;overflow:hidden;background:var(--black);
+}
+.about-img-main{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.65);
+  transition:transform .9s ease;
+}
+.about-images:hover .about-img-main{transform:scale(1.04)}
+.about-img-badge{
+  position:absolute;bottom:40px;right:-1px;
+  background:var(--beige);color:var(--black);
+  padding:18px 26px;max-width:210px;
+}
+.about-img-badge p{font-size:13px;font-weight:500;line-height:1.5}
+.about-text{
+  background:var(--black);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 64px;
+}
+.about-text p{
+  color:var(--muted);line-height:1.9;font-size:14.5px;
+  margin-bottom:14px;max-width:420px;
+}
+.features{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;margin-top:40px;
+  border-top:1px solid rgba(200,184,154,.12);
+}
+.feature{
+  display:flex;flex-direction:column;
+  padding:24px 0 24px 0;
+  border-bottom:1px solid rgba(200,184,154,.08);
+  gap:8px;
+}
+.feature:nth-child(odd){padding-right:32px}
+.feature:nth-child(even){padding-left:32px;border-left:1px solid rgba(200,184,154,.08)}
+.feature-icon{
+  color:var(--beige);
+  margin-bottom:4px;
+}
+.feature-title{font-size:14px;font-weight:500;color:var(--white);letter-spacing:.5px}
+.feature-desc{font-size:12.5px;color:var(--muted);line-height:1.7}
+
+/* ── MENU ── */
+#menu{
+  background:var(--black);color:var(--white);
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:100vh;
+}
+.menu-photo{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+}
+.menu-photo img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.65);
+}
+.menu-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, rgba(13,13,13,.6) 0%, rgba(13,13,13,0) 60%);
+}
+.menu-content{
+  padding:80px 64px;
+  overflow-y:auto;
+}
+.menu-header{
+  margin-bottom:40px;
+}
+.menu-tabs{
+  display:flex;gap:0;
+  flex-wrap:wrap;
+  margin-top:24px;
+  width:100%;
+}
+.tab{
+  background:none;border:none;
+  color:var(--muted);
+  font-family:'Jost',sans-serif;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;font-weight:400;
+  padding:12px 18px;cursor:pointer;
+  position:relative;transition:.2s;
+  white-space:nowrap;
+}
+.tab.on{color:var(--beige);}
+.tab::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:var(--beige);transform:scaleX(0);transition:.25s;
+}
+.tab.on::after{transform:scaleX(1)}
+.tab:hover:not(.on){color:var(--white)}
+
+.panel{display:none}
+.panel.on{display:block}
+
+.menu-cols{
+  display:block;
+  border-top:1px solid rgba(200,184,154,.1);
+}
+.menu-row{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:20px;padding:16px 0;
+  border-bottom:1px solid rgba(200,184,154,.07);
+  transition:.2s;
+}
+.menu-row:hover{background:rgba(200,184,154,.04);padding-left:4px}
+.menu-name{
+  font-family:'Jost',sans-serif;
+  font-size:15px;font-weight:400;color:var(--white);
+  letter-spacing:.3px;
+}
+.menu-desc{
+  font-size:11.5px;color:var(--muted);
+  margin-top:3px;line-height:1.5;letter-spacing:.2px;
+}
+.menu-price{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;color:var(--beige);
+  white-space:nowrap;flex-shrink:0;letter-spacing:1px;
+}
+.menu-cat-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:2px;color:var(--beige);
+  padding:28px 0 10px;
+  border-bottom:1px solid rgba(200,184,154,.12);
+}
+.menu-note{
+  margin-top:36px;font-size:12px;color:rgba(200,184,154,.4);
+  letter-spacing:1px;
+}
+
+/* ── SALON ── */
+#salon{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:80vh;
+}
+.salon-text{
+  background:var(--dark);color:var(--white);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 64px;
+}
+.salon-text p{
+  color:var(--muted);line-height:1.9;font-size:14.5px;
+  max-width:420px;margin-bottom:14px;
+}
+.salon-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:rgba(200,184,154,.08);
+  margin-top:36px;
+}
+.stat{background:var(--dark);padding:22px 26px}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:40px;color:var(--beige);line-height:1;letter-spacing:1px;
+}
+.stat-lbl{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.salon-image{
+  position:relative;overflow:hidden;background:var(--mid);
+}
+.salon-image img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.7);
+  transition:transform .9s ease;
+}
+.salon-image:hover img{transform:scale(1.04)}
+.salon-tag-img{
+  position:absolute;top:36px;left:36px;
+  background:var(--beige);color:var(--black);
+  padding:7px 14px;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;font-weight:500;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;
+}
+
+/* ── EVENTS ── */
+#events{
+  background:#f0e8d8;
+  padding:100px 56px;
+}
+.events-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;margin-top:48px;
+}
+.event-card{
+  background:#fff9f0;
+  padding:40px 34px;
+  position:relative;overflow:hidden;
+  transition:.3s;border-top:2px solid var(--beige-d);
+  box-shadow:0 2px 20px rgba(0,0,0,.06);
+}
+.event-card:hover{transform:translateY(-3px)}
+.event-icon{font-size:28px;margin-bottom:18px;display:block}
+.event-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px;letter-spacing:1px;margin-bottom:12px;color:#1a1410;
+}
+.event-desc{color:#5a4a3a;font-size:14px;line-height:1.8}
+.event-cta{
+  margin-top:22px;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--beige-d);
+  text-decoration:none;font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.event-cta::after{content:'→';transition:.2s}
+.event-cta:hover::after{transform:translateX(4px)}
+
+/* ── PIZZA STRIP ── */
+.pizza-strip{
+  background:var(--dark);color:var(--white);
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;min-height:50vh;overflow:hidden;
+}
+.pizza-img{overflow:hidden;height:100%;min-height:360px;position:relative}
+.pizza-img img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.65);
+  transition:transform .9s;
+}
+.pizza-img:hover img{transform:scale(1.04)}
+.pizza-text{padding:64px 64px}
+.pizza-text p{color:var(--muted);line-height:1.9;font-size:14.5px;margin:18px 0 32px;max-width:400px}
+
+/* ── RESERVE ── */
+#reserve{
+  background:var(--black);
+  padding:110px 56px;
+  text-align:center;color:var(--white);
+}
+#reserve .section-tag{justify-content:center;display:flex}
+#reserve p.reserve-intro{
+  color:var(--muted);max-width:500px;
+  margin:18px auto 40px;font-size:15px;line-height:1.8;
+}
+/* POPTÁVKA sekce — světlá */
+#poptavka-sekce{
+  background:#f0e8d8;
+  padding:110px 56px;
+  text-align:center;color:#1a1410;
+}
+#poptavka-sekce p.poptavka-intro{
+  color:#5a4a3a;max-width:500px;
+  margin:18px auto 48px;font-size:15px;line-height:1.8;
+}
+.reserve-form{
+  max-width:680px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.reserve-form input,
+.reserve-form select,
+.reserve-form textarea{
+  background:rgba(200,184,154,.06);
+  border:1px solid rgba(200,184,154,.15);
+  color:var(--white);
+  font-family:'Jost',sans-serif;font-size:14px;font-weight:300;
+  padding:15px 18px;width:100%;
+  transition:.2s;outline:none;appearance:none;
+}
+.reserve-form input::placeholder,
+.reserve-form select::placeholder,
+.reserve-form textarea::placeholder{color:rgba(245,242,238,.3)}
+.reserve-form select option{background:var(--dark);color:var(--white)}
+.reserve-form input:focus,
+.reserve-form select:focus,
+.reserve-form textarea:focus{
+  border-color:var(--beige);
+  background:rgba(200,184,154,.1);
+}
+.reserve-form textarea{grid-column:1/-1;resize:vertical;min-height:100px}
+.reserve-form .btn-gold{grid-column:1/-1;cursor:pointer;font-family:'Jost',sans-serif}
+.form-note{
+  margin-top:14px;font-size:11px;
+  color:#9a8a7a;letter-spacing:1px;
+  grid-column:1/-1;text-align:center;
+}
+.or-call{
+  margin-top:30px;font-size:13px;color:var(--muted);
+}
+.or-call a{color:var(--beige);text-decoration:none;font-size:17px;font-weight:500;display:block;margin-top:4px}
+
+/* ── RESERVE SPLIT ── */
+.reserve-split{
+  display:grid;grid-template-columns:1fr;
+  gap:56px;max-width:680px;margin:80px auto 0;
+  text-align:center;
+}
+.reserve-divider-v{
+  display:none;
+}
+.reserve-col h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:2px;
+  color:#1a1410;margin-bottom:24px;
+}
+.reserve-col > p{
+  font-size:13px;color:#5a4a3a;
+  margin:0 0 14px;line-height:1.7;max-width:none;
+}
+.reserve-btns{
+  display:flex;flex-direction:row;gap:20px;justify-content:center;flex-wrap:wrap;
+}
+.reserve-card-btn{
+  display:flex;flex-direction:column;align-items:center;
+  width:240px;padding:36px 24px;
+  background:rgba(200,184,154,.06);
+  border:1px solid rgba(200,184,154,.2);
+  text-decoration:none;color:var(--white);
+  transition:.25s;
+}
+.reserve-card-btn:hover{
+  background:rgba(200,184,154,.12);
+  border-color:var(--beige);
+  transform:translateY(-4px);
+}
+.reserve-card-btn .rcb-icon{font-size:36px;margin-bottom:16px;line-height:1;}
+.reserve-card-btn .rcb-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:2px;
+  color:var(--beige);margin-bottom:6px;
+}
+.reserve-card-btn .rcb-sub{
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);
+}
+.reserve-system-note{
+  margin-top:16px;font-size:11px;
+  color:#9a8a7a;letter-spacing:1px;
+}
+/* poptávkový formulář */
+.poptavka-form{
+  max-width:680px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.poptavka-form input,
+.poptavka-form select,
+.poptavka-form textarea{
+  background:#fff9f0;
+  border:1px solid rgba(139,105,20,.25);
+  color:#1a1410;
+  font-family:'Jost',sans-serif;font-size:14px;font-weight:300;
+  padding:15px 18px;width:100%;
+  transition:.2s;outline:none;appearance:none;
+}
+.poptavka-form input::placeholder,
+.poptavka-form textarea::placeholder{color:#9a8a7a}
+.poptavka-form select option{background:#fff9f0;color:#1a1410}
+.poptavka-form input:focus,
+.poptavka-form select:focus,
+.poptavka-form textarea:focus{
+  border-color:var(--beige-d);
+  background:#fff;
+}
+.poptavka-form .full{grid-column:1/-1}
+.poptavka-form textarea{grid-column:1/-1;resize:vertical;min-height:120px}
+.poptavka-form .btn-gold{grid-column:1/-1;cursor:pointer;font-family:'Jost',sans-serif}
+
+/* ── SOCIAL ── */
+.social-links{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.social-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  color:var(--muted);text-decoration:none;
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  padding:10px 16px;
+  border:1px solid rgba(200,184,154,.15);
+  transition:.2s;
+}
+.social-btn:hover{
+  color:var(--beige);
+  border-color:var(--beige);
+  background:rgba(200,184,154,.06);
+}
+.social-btn svg{flex-shrink:0;transition:.2s}
+.social-btn:hover svg{stroke:var(--beige)}
+
+/* ── INFO ── */
+#info{
+  background:var(--dark);color:var(--white);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;border-top:1px solid rgba(200,184,154,.1);
+}
+.info-block{
+  padding:60px 48px;background:var(--dark);
+  border-top:2px solid var(--beige);
+}
+.info-block h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:24px;letter-spacing:2px;margin-bottom:20px;color:var(--beige);
+}
+.info-block p,
+.info-block address{
+  color:var(--muted);font-size:14px;
+  line-height:2;font-style:normal;
+}
+.info-block a{color:var(--beige-l);text-decoration:none}
+.info-block a:hover{color:var(--white)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--black);
+  border-top:1px solid rgba(200,184,154,.08);
+  padding:30px 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+footer p{font-size:12px;color:rgba(245,242,238,.2);letter-spacing:.5px}
+.footer-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:3px;color:var(--white);text-decoration:none;
+}
+.footer-logo em{color:var(--beige);font-style:normal}
+
+/* ── DENNÍ MENU ── */
+#denni-menu{
+  background:var(--black);color:var(--white);
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.denni-photo{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+}
+.denni-photo img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.7);
+}
+.denni-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to left, rgba(13,13,13,0) 60%, rgba(13,13,13,.5) 100%);
+}
+.denni-content{
+  padding:80px 64px;
+  order:-1;
+}
+.denni-top{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:12px;gap:20px;
+}
+.denni-date{
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--muted);margin-top:10px;
+}
+.denni-badge{
+  background:var(--beige);color:var(--black);
+  padding:6px 16px;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;
+  flex-shrink:0;
+}
+.denni-akce{
+  background:rgba(200,184,154,.08);
+  border-left:3px solid var(--beige);
+  padding:18px 24px;
+  margin:28px 0 36px;
+  font-size:14px;color:var(--beige-l);line-height:1.75;
+}
+.denni-list{
+  list-style:none;
+}
+.denni-cat{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;letter-spacing:2px;color:var(--beige);
+  padding:28px 0 10px;
+  border-bottom:1px solid rgba(200,184,154,.12);
+  margin-bottom:0;
+}
+.denni-row{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:20px;padding:16px 0;
+  border-bottom:1px solid rgba(200,184,154,.07);
+}
+.denni-row:hover{background:rgba(200,184,154,.04);padding-left:4px;transition:.2s}
+.denni-name{
+  font-size:15px;font-weight:400;color:var(--white);
+}
+.denni-desc{
+  font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.5;
+}
+.denni-price{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;color:var(--beige);
+  white-space:nowrap;flex-shrink:0;letter-spacing:1px;
+}
+.denni-also{
+  margin-top:40px;padding:20px 24px;
+  background:rgba(200,184,154,.06);border:1px solid rgba(200,184,154,.15);
+  font-size:13px;color:var(--muted);line-height:1.8;
+}
+.denni-also > strong:first-child{color:var(--beige);display:block;margin-bottom:6px;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;}
+.denni-also a{color:var(--beige-l);text-decoration:none}
+.denni-also a:hover{color:var(--white)}
+.denni-zdroj{
+  margin-top:28px;font-size:11px;color:rgba(200,184,154,.35);letter-spacing:1px;
+}
+.denni-zdroj a{color:rgba(200,184,154,.5);text-decoration:none}
+
+
+
+.salon-catering{
+  position:absolute;bottom:0;left:0;right:0;
+  height:40%;
+  overflow:hidden;
+}
+.salon-catering img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.8);
+  border-top:3px solid var(--beige);
+}
+.salon-catering-label{
+  position:absolute;top:12px;left:16px;
+  background:var(--beige);color:var(--black);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:14px;letter-spacing:2px;
+  padding:4px 12px;
+}
+
+/* ── SALON FEATURES ── */
+.salon-features{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0;margin-top:36px;
+  border-top:1px solid rgba(200,184,154,.12);
+}
+.salon-feature{
+  display:flex;flex-direction:column;
+  padding:22px 0;
+  border-bottom:1px solid rgba(200,184,154,.08);
+  gap:6px;
+}
+.salon-feature:nth-child(odd){padding-right:28px}
+.salon-feature:nth-child(even){padding-left:28px;border-left:1px solid rgba(200,184,154,.08)}
+.salon-feature-icon{color:var(--beige);margin-bottom:4px}
+.salon-feature-title{font-size:14px;font-weight:500;color:var(--white);letter-spacing:.5px}
+.salon-feature-desc{font-size:12px;color:var(--muted);line-height:1.7}
+
+/* ── BOWLING ── */
+#bowling{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:80vh;
+  background:var(--black);overflow:hidden;
+}
+.bowling-text{
+  background:var(--black);color:var(--white);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 64px;
+}
+.bowling-text p{
+  color:var(--muted);line-height:1.9;font-size:14.5px;
+  max-width:440px;margin-bottom:14px;
+}
+.bowling-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:rgba(200,184,154,.08);
+  margin-top:36px;
+}
+.bowling-stat{background:var(--black);padding:22px 26px;}
+.bowling-stat-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:40px;color:var(--beige);line-height:1;letter-spacing:1px;
+}
+.bowling-stat-lbl{font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.bowling-image{
+  position:relative;overflow:hidden;
+}
+.bowling-image img{
+  width:100%;height:100%;object-fit:cover;
+  display:block;filter:brightness(.7);
+  transition:transform .9s ease;
+}
+.bowling-image:hover img{transform:scale(1.04)}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  nav.scrolled{padding:12px 24px}
+  .nav-links{display:none}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;inset:0;top:58px;
+    background:rgba(13,13,13,.98);
+    padding:40px 32px;gap:24px;z-index:199;
+  }
+  .nav-links.open a{font-size:16px}
+  .hamburger{display:flex}
+  .hero-inner{padding:0 24px;max-width:100%}
+  #about,#salon{grid-template-columns:1fr}
+  .about-images{min-height:300px}
+  .about-text,.salon-text{padding:48px 28px}
+  .features{grid-template-columns:1fr}
+  #denni-menu{grid-template-columns:1fr}
+  .denni-photo{display:none}
+  .denni-content{padding:60px 24px;border-left:none}
+  .menu-cols{grid-template-columns:1fr}
+  .menu-tabs{flex-wrap:wrap}
+  .tab{flex:0 0 auto;font-size:10px;padding:10px 12px}
+  #menu{grid-template-columns:1fr}
+  .menu-photo{display:none}
+  .menu-content{padding:60px 24px}
+  #events{padding:60px 24px}
+  .events-grid{grid-template-columns:1fr;gap:12px}
+  #info{grid-template-columns:1fr}
+  .reserve-form{grid-template-columns:1fr}
+  .pizza-strip{grid-template-columns:1fr}
+  .pizza-img{min-height:240px}
+  .pizza-text{padding:44px 24px}
+  #salon{grid-template-columns:1fr}
+  #bowling{grid-template-columns:1fr}
+  .bowling-text{padding:48px 28px}
+  .bowling-image{min-height:280px}
+  .salon-image{min-height:300px}
+  footer{flex-direction:column;text-align:center;padding:26px 24px}
+  #reserve{padding:72px 24px}
+  .reserve-split{grid-template-columns:1fr;gap:40px 0}
+  .reserve-divider-v{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="logo">restaurace <em>smetanova</em></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#about">O nás</a></li>
+    <li><a href="#menu">Á la carte</a></li>
+    <li><a href="#salon">Salonek</a></li>
+    <li><a href="#bowling">Bowling</a></li>
+    <li><a href="#events">Akce</a></li>
+    <li><a href="#reserve" class="nav-btn">Rezervace</a></li>
+  </ul>
+  <div class="hamburger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Vsetín · Otevřeno od roku 2022</div>
+    <h1 class="hero-h1">
+      Restaurace
+      <em>Smetanova</em>
+    </h1>
+    <p class="hero-sub">Česká klasika, italské speciality, pizza z kamenné pece, salonek pro 70 hostů a bowlingová zábava — vše pod jednou střechou v Obchodním centru Vsetín.</p>
+    <div class="cta-row">
+      <a href="https://restaurace-smetanova.rezervujstul.cz/reservation-form.php" target="_blank" rel="noopener" class="btn btn-gold">Rezervovat stůl</a>
+      <a href="#denni-menu" class="btn btn-denni">Denní menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="denni-menu">
+
+  <!-- MENU VLEVO -->
+  <div class="denni-content">
+    <div class="denni-top">
+      <div class="reveal">
+        <span class="section-tag">Každý den čerstvě</span>
+        <h2 class="section-h">Denní <em>menu</em></h2>
+        <div class="denni-date">Sobota 23. 5. 2026</div>
+      </div>
+      <div class="denni-badge" style="display:none"></div>
+    </div>
+
+    <!-- denni menu obsah -->
+
+    <!-- DYNAMICKÉ MENU Z MENICKA.CZ -->
+    <div id="denni-items">
+
+      <!-- POLÉVKY (fallback — nahradí JS) -->
+      <div class="denni-cat reveal">Polévky</div>
+      <div class="denni-row reveal">
+        <div><div class="denni-name">0,2 l Vývar s masem, zeleninou, nudlemi a játrovými knedlíčky</div></div>
+        <div class="denni-price">35 Kč</div>
+      </div>
+      <div class="denni-row reveal">
+        <div><div class="denni-name">0,33 l Naše česnečka s vejcem a opečeným chlebem</div></div>
+        <div class="denni-price">65 Kč</div>
+      </div>
+
+      <!-- HLAVNÍ JÍDLA (fallback — nahradí JS) -->
+      <div class="denni-cat reveal">Hlavní jídla</div>
+      <div class="denni-row reveal">
+        <div>
+          <div class="denni-name">11. 200 g Konfitovaný vepřový bůček na česneku a tymiánu</div>
+          <div class="denni-desc">S červeným a bílým zelím, špekový knedlík</div>
+        </div>
+        <div class="denni-price">210 Kč</div>
+      </div>
+      <div class="denni-row reveal">
+        <div>
+          <div class="denni-name">12. 180 g Vídeňská hovězí roštěná se smaženou cibulkou</div>
+          <div class="denni-desc">Dušená rýže</div>
+        </div>
+        <div class="denni-price">245 Kč</div>
+      </div>
+      <div class="denni-row reveal">
+        <div>
+          <div class="denni-name">13. 250 g XXL Smažený vepřový řízek z krkovice</div>
+          <div class="denni-desc">Selský bramborový salát se špetkou křenu, coleslaw</div>
+        </div>
+        <div class="denni-price">265 Kč</div>
+      </div>
+
+    </div><!-- #denni-items -->
+
+    <!-- SLADKÁ TEČKA -->
+    <div class="denni-cat reveal" style="margin-top:8px">Sladká tečka</div>
+    <div class="denni-row reveal">
+      <div><div class="denni-name">Palačinka s Nutellou nebo marmeládou</div><div class="denni-desc">S čerstvým ovocem dle nabídky</div></div>
+      <div class="denni-price">39 Kč</div>
+    </div>
+
+    <div class="denni-also reveal">
+      <strong>Á la carte &amp; Pizza lístek</strong>
+      <strong style="color:var(--beige-l)">Po–Pá:</strong> Á la carte podáváme od 14:00 · <strong style="color:var(--beige-l)">So–Ne:</strong> k dennímu menu i á la carte celý den
+    </div>
+
+    <div class="denni-also reveal" style="margin-top:12px">
+      <strong>Telefonické objednávky denního menu</strong>
+      Jídlo si můžete objednat telefonicky <strong style="color:var(--beige)">10:00–11:00</strong>, později bohužel nemůžeme zaručit, že výběr bude kompletní nebo že se dovoláte obsluze.
+    </div>
+
+    <div class="denni-zdroj reveal">Zdroj: <a href="https://www.menicka.cz/7384-restaurace-a-bowling-smetanova.html" target="_blank">menicka.cz</a> · Podrobný seznam alergenů u obsluhy</div>
+  </div>
+
+  <!-- FOTO VPRAVO (sticky) -->
+  <div class="denni-photo">
+    <img src="denni-menu.jpg" alt="Denní menu — čerstvá jídla">
+    <div class="denni-photo-overlay"></div>
+  </div>
+
+</section>
+
+<!-- DENNÍ MENU -->
+<section id="about">
+  <div class="about-images">
+    <img class="about-img-main" src="o-nas.jpg" alt="Interiér restaurace" loading="lazy">
+    <div class="about-img-badge">
+      <p>Tradiční česká i italská kuchyně s láskou</p>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="reveal">
+      <span class="section-tag">O nás</span>
+      <h2 class="section-h">Místo pro <em>každou</em> příležitost</h2>
+      <div class="divider"></div>
+    </div>
+    <p class="reveal d1">Jsme místo, kde se dobré jídlo potkává s dobrou náladou. Od roku 2022 vaříme pro Vsetín poctivou českou klasiku, domácí těstoviny a gnocchi, pizzu z kamenné pece a grilované speciality — prostě kuchyni, na kterou se těšíte.</p>
+    <p class="reveal d2">Přijďte s rodinou, s přáteli nebo s celým týmem. Na letní zahrádce, v soukromém salonku nebo rovnou u bowlingové dráhy — u nás si vždy najdete svoje místo.</p>
+    <div class="features reveal d3">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="feature-title">Letní zahrada</div>
+        <div class="feature-desc">Příjemné posezení venku v letní sezóně</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="feature-title">Bowling</div>
+        <div class="feature-desc">4 dráhy (3 pro děti), obuv zdarma, pití a snacky</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="feature-title">Pizza z kamenné pece</div>
+        <div class="feature-desc">Pravá italská pizza pečená v tradiční kamenné peci</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="feature-title">Šéfkuchař Michal Žamberský</div>
+        <div class="feature-desc">Poctivá česká i italská kuchyně z čerstvých surovin každý den</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+
+  <!-- OBSAH VLEVO -->
+  <div class="menu-content">
+
+  <div class="menu-header">
+    <div class="reveal">
+      <span class="section-tag" style="color:var(--beige)">Á la carte</span>
+      <h2 class="section-h">Naše <em>menu</em></h2>
+    </div>
+    <div class="menu-tabs reveal d2">
+      <button class="tab on" data-tab="predkrmy">Předkrmy & Polévky</button>
+      <button class="tab" data-tab="speciality">Speciality</button>
+      <button class="tab" data-tab="minutky">Minutky</button>
+      <button class="tab" data-tab="testoviny">Těstoviny & Gnocchi</button>
+      <button class="tab" data-tab="gril">Gril & Ryby</button>
+      <button class="tab" data-tab="pizza">Pizza</button>
+      <button class="tab" data-tab="sladke">Sladké</button>
+      <button class="tab" data-tab="napoje">Nápoje</button>
+    </div>
+  </div>
+
+  <!-- PŘEDKRMY & POLÉVKY -->
+  <div id="predkrmy" class="panel on">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Předkrmy</div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Caprese</div><div class="menu-desc">Rajčata, mozzarella, bazalka, černé olivy, pečivo</div></div>
+        <div class="menu-price">140 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Tatarák z červené řepy</div><div class="menu-desc">Rukola, kozí sýr, ořechy, balsamico, pečivo</div></div>
+        <div class="menu-price">170 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Rillettes — naše francouzská masová paštika</div><div class="menu-desc">Domácí bageta, červená cibule, konfitovaný česnek</div></div>
+        <div class="menu-price">110 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Hovězí carpaccio</div><div class="menu-desc">Rukola, kapary, sýr grana padano, citron, opečený toust</div></div>
+        <div class="menu-price">190 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Náš ochucený hovězí tatarák</div><div class="menu-desc">Česnek, kapary, červená cibule, topinky</div></div>
+        <div class="menu-price">245 Kč</div>
+      </div>
+      <div class="menu-cat-title">Polévky</div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Naše poctivá česneková</div><div class="menu-desc">Vejce, poctivý vývar, česnek, smažené chlebové krutony</div></div>
+        <div class="menu-price">65 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Krémová tomatová</div><div class="menu-desc">Rajčatový krém, bazalkové pesto</div></div>
+        <div class="menu-price">65 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Dýňový krém</div><div class="menu-desc">Dýňový krém, smetana, krutony</div></div>
+        <div class="menu-price">65 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Poctivý drůbeží vývar</div><div class="menu-desc">Vývar, maso, zelenina, nudle</div></div>
+        <div class="menu-price">60 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECIALITY -->
+  <div id="speciality" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Výběr ze specialit</div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Filírovaný krůtí steak a naše domácí gnocchi</div><div class="menu-desc">S bazalkovým pestem, sušenými rajčaty, konfitovaným česnekem a grana padano</div></div>
+        <div class="menu-price">290 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Grilované vepřové medailonky</div><div class="menu-desc">S pečenými grenaillemi, pepřovou omáčkou</div></div>
+        <div class="menu-price">310 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Vepřová panenka "Váleček"</div><div class="menu-desc">S gratinovanými bramborami a hříbkovou omáčkou</div></div>
+        <div class="menu-price">315 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Smažený telecí řízek z roštěnce na másle</div><div class="menu-desc">S bramborovou kaší</div></div>
+        <div class="menu-price">335 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Telecí steak z roštěnce na másle a bylinkách</div><div class="menu-desc">S grilovanou zeleninou</div></div>
+        <div class="menu-price">395 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">250g Hovězí filírovaná květová špička</div><div class="menu-desc">S pečenými bramborami /pečáky/ se slaninou a cibulí, omáčkou demi-glace</div></div>
+        <div class="menu-price">335 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Steak z hovězí svíčkové</div><div class="menu-desc">S hranolkami a pepřovou omáčkou</div></div>
+        <div class="menu-price">415 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINUTKY -->
+  <div id="minutky" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Minutková klasika</div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Restované kuřecí prso</div><div class="menu-desc">S grilovanou zeleninou, grenaillemi a omáčkou demi-glace</div></div>
+        <div class="menu-price">275 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Smažený řízek z kuřecího prsa</div><div class="menu-desc">S bramborovou kaší a citrónem</div></div>
+        <div class="menu-price">210 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Smažené řízečky z vepřové panenky</div><div class="menu-desc">S bramborovou kaší</div></div>
+        <div class="menu-price">235 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Grilovaná vepřová panenka</div><div class="menu-desc">S hranolkami a domácí tatarkou</div></div>
+        <div class="menu-price">245 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Flamendr z vepřové panenky</div><div class="menu-desc">S hranolkami a domácí tatarkou</div></div>
+        <div class="menu-price">260 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Smažený sýr Gouda</div><div class="menu-desc">S hranolkami a domácí tatarkou</div></div>
+        <div class="menu-price">210 Kč</div>
+      </div>
+      <div class="menu-cat-title">Saláty</div>
+      <div class="menu-row">
+        <div><div class="menu-name">Míchaný zeleninový salát</div><div class="menu-desc">Ledový salát, paprika, rajče, okurka, vinaigrette</div></div>
+        <div class="menu-price">90 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Caesar salát</div><div class="menu-desc">Římský salát, krutony, sýr grana padano, caesar dresink</div></div>
+        <div class="menu-price">135 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Salát s kuřecími stripsy</div><div class="menu-desc">Mix salátů a čerstvé zeleniny, sýr grana padano</div></div>
+        <div class="menu-price">195 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Grilovaná zelenina</div><div class="menu-desc">S mozzarellou a balsamikem</div></div>
+        <div class="menu-price">170 Kč</div>
+      </div>
+      <div class="menu-cat-title">Dětská jídla</div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Smažený kuřecí řízek</div><div class="menu-desc">S bramborovou kaší</div></div>
+        <div class="menu-price">155 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">100g Přírodní kuřecí řízek</div><div class="menu-desc">S hranolkami</div></div>
+        <div class="menu-price">140 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Gnocchi s mákem</div><div class="menu-desc">S máslem a cukrem sypané</div></div>
+        <div class="menu-price">110 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Boloňské tagliatelle</div><div class="menu-desc">S masovým ragú, rajčaty a sýrem grana padano</div></div>
+        <div class="menu-price">150 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TĚSTOVINY & GNOCCHI -->
+  <div id="testoviny" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Čerstvé těstoviny & domácí gnocchi</div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Tagliatelle al Mafioso</div><div class="menu-desc">S hovězí svíčkovou, rajčaty, česnekem, chilli, smetanou a sýrem grana padano</div></div>
+        <div class="menu-price">275 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Tagliatelle Bolognese</div><div class="menu-desc">S masovým ragú, rajčaty a sýrem grana padano</div></div>
+        <div class="menu-price">210 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Houbové tagliatelle</div><div class="menu-desc">S houbovým ragú, smetanou a sýrem grana padano</div></div>
+        <div class="menu-price">195 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Tagliatelle s vepřovou panenkou</div><div class="menu-desc">Smetanou, slaninou, cibulí a sýrem grana padano</div></div>
+        <div class="menu-price">245 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Gnocchi s kuřecím masem</div><div class="menu-desc">Se špenátem, česnekem, smetanou a sýrem grana padano</div></div>
+        <div class="menu-price">225 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Gnocchi s vepřovou panenkou</div><div class="menu-desc">S vepřovou panenkou, slaninou, hříbky, smetanou a sýrem grana padano</div></div>
+        <div class="menu-price">255 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Gnocchi kuřecím steakem</div><div class="menu-desc">S bazalkovým pestem a sýrem grana padano</div></div>
+        <div class="menu-price">265 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRIL & RYBY -->
+  <div id="gril" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Speciality z grilu — masa</div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Kuřecí prsní steak</div></div>
+        <div class="menu-price">180 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Krůtí prsní steak</div></div>
+        <div class="menu-price">200 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Vepřová panenka</div></div>
+        <div class="menu-price">195 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Telecí steak z roštěnce</div></div>
+        <div class="menu-price">295 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">250g Hovězí steak ze špičky</div></div>
+        <div class="menu-price">215 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">150g Hovězí steak ze svíčkové</div></div>
+        <div class="menu-price">295 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">300g Hovězí steak ze svíčkové</div></div>
+        <div class="menu-price">495 Kč</div>
+      </div>
+      <div class="menu-cat-title">Ryby</div>
+      <div class="menu-row">
+        <div><div class="menu-name">135g Mořská treska</div></div>
+        <div class="menu-price">200 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Filet z lososa</div></div>
+        <div class="menu-price">270 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Filet z candáta</div></div>
+        <div class="menu-price">270 Kč</div>
+      </div>
+      <div class="menu-cat-title">Vege</div>
+      <div class="menu-row">
+        <div><div class="menu-name">190g Uzený tempeh</div></div>
+        <div class="menu-price">190 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Uzené tofu</div></div>
+        <div class="menu-price">190 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Haloumi sýr</div></div>
+        <div class="menu-price">190 Kč</div>
+      </div>
+      <div class="menu-cat-title">Přílohy &amp; Omáčky</div>
+      <div class="menu-row">
+        <div><div class="menu-name">Hranolky, krokety, americké brambory, grenaille, gratinované brambory, bramborová kaše</div></div>
+        <div class="menu-price">55 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Grilovaná zelenina s česnekem a bylinkami</div></div>
+        <div class="menu-price">95 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Omáčky: Houbová / Pepřová / Demi-glace</div></div>
+        <div class="menu-price">60 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Domácí tatarka / kečup</div></div>
+        <div class="menu-price">30 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIZZA -->
+  <div id="pizza" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Pizza tyčinky &amp; chléb</div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza tyčinky</div></div>
+        <div class="menu-price">89 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza chleba</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza tyčinky s česnekem</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza tyčinky se slaninou</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza tyčinky s mozzarellou</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Pizza tyčinky se slaninou a mozzarellou</div></div>
+        <div class="menu-price">109 Kč</div>
+      </div>
+      <div class="menu-cat-title">Pizza</div>
+      <div class="menu-row">
+        <div><div class="menu-name">1. Margherita</div><div class="menu-desc">Rajčata, mozzarella, bazalka</div></div>
+        <div class="menu-price">169 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">2. Prosciutto Cotto</div><div class="menu-desc">Rajčata, mozzarella, prosciutto cotto</div></div>
+        <div class="menu-price">185 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">3. Prosciutto Crudo</div><div class="menu-desc">Smetana, olivový olej, mozzarella, prosciutto crudo, grana padano, rukola</div></div>
+        <div class="menu-price">265 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">4. Quattro Formaggi</div><div class="menu-desc">Smetana, grana padano, scamorza, gorgonzola, mozzarella</div></div>
+        <div class="menu-price">249 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">5. Capriciosa</div><div class="menu-desc">Rajčata, mozzarella, dušená šunka, žampiony</div></div>
+        <div class="menu-price">199 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">6. Smetanova</div><div class="menu-desc">Rajčata, mozzarella, slanina, gorgonzola</div></div>
+        <div class="menu-price">245 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">7. Messicana</div><div class="menu-desc">Rajčata, mozzarella, paprikáš, cibule, chilli, vejce</div></div>
+        <div class="menu-price">249 Kč</div>
+      </div>
+      <div class="menu-cat-title">Extra na pizzu</div>
+      <div class="menu-row">
+        <div><div class="menu-name">Kukuřice, olivy, ananas, žampiony, slanina, mozzarella, grana padano</div></div>
+        <div class="menu-price">30 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Papírová krabice pro odnos</div></div>
+        <div class="menu-price">10 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLADKÉ -->
+  <div id="sladke" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Sladká tečka</div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 por Panna cotta s polevou</div><div class="menu-desc">Jahoda, karamel, lesní ovoce</div></div>
+        <div class="menu-price">89 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 por Čokoládový fondant</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">200g Domácí gnocchi sladké</div><div class="menu-desc">S mákem a máslem</div></div>
+        <div class="menu-price">99 Kč</div>
+      </div>
+      <div class="menu-cat-title">Zmrzlina</div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 kopeček zmrzliny</div><div class="menu-desc">Vanilka, čokoláda</div></div>
+        <div class="menu-price">19 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 por Malý zmrzlinový pohár</div><div class="menu-desc">1 kopeček vanilkové zmrzliny, směs lesního ovoce, domácí šlehačka</div></div>
+        <div class="menu-price">79 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 por Velký zmrzlinový pohár</div><div class="menu-desc">2 kopečky vanilkové zmrzliny, 1 kopeček čokoládové, směs lesního ovoce, domácí šlehačka</div></div>
+        <div class="menu-price">119 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1 por Banánový split</div><div class="menu-desc">Banán, 2 kopečky vanilkové zmrzliny, poleva, domácí šlehačka</div></div>
+        <div class="menu-price">89 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NÁPOJE -->
+  <div id="napoje" class="panel">
+    <div class="menu-cols">
+      <div class="menu-cat-title">Nealkoholické nápoje</div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Coca-Cola / Fanta / Sprite</div><div class="menu-desc">Zero, Zero Zero, Cherry</div></div>
+        <div class="menu-price">50 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,25l Kinley</div><div class="menu-desc">Bitter Rose, Ginger, Tonic Water, Cherry Pepper</div></div>
+        <div class="menu-price">50 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,33l Römerquelle citrónová tráva</div></div>
+        <div class="menu-price">50 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,30l Natura</div><div class="menu-desc">Jemně perlivá, neperlivá</div></div>
+        <div class="menu-price">40 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1l Džbánek vody</div><div class="menu-desc">Perlivý, neperlivý</div></div>
+        <div class="menu-price">70 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1l Džbánek vody s citrusy</div></div>
+        <div class="menu-price">90 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,40l Domácí limonáda</div><div class="menu-desc">Malina, rakytník, maracuja, okurka, jahoda</div></div>
+        <div class="menu-price">95 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,30l Malinovka</div></div>
+        <div class="menu-price">40 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,25l Cappy dle nabídky</div><div class="menu-desc">Jablko, pomeranč, jahoda, multivitamín, hruška</div></div>
+        <div class="menu-price">60 Kč</div>
+      </div>
+      <div class="menu-cat-title">Káva</div>
+      <div class="menu-row">
+        <div><div class="menu-name">Espresso / Lungo</div></div>
+        <div class="menu-price">40 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Americano</div></div>
+        <div class="menu-price">45 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Espresso macchiato</div></div>
+        <div class="menu-price">50 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Cappuccino / Latté macchiato</div></div>
+        <div class="menu-price">60 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Espresso doppio / Espresso tonic</div></div>
+        <div class="menu-price">80–90 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Latté macchiato vanilka / karamel</div></div>
+        <div class="menu-price">75 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Flat white / Káva se šlehačkou</div></div>
+        <div class="menu-price">70–95 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Horká čokoláda</div></div>
+        <div class="menu-price">70 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Čaj</div><div class="menu-desc">Černý, zelený, mátový, heřmánkový, bylinkový</div></div>
+        <div class="menu-price">50 Kč</div>
+      </div>
+      <div class="menu-cat-title">Pivo</div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,30l Jedenáctka Staropramen</div></div>
+        <div class="menu-price">30 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,50l Jedenáctka Staropramen</div></div>
+        <div class="menu-price">45 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,40l Nefiltr</div></div>
+        <div class="menu-price">45 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">1l Tuplák Jedenáctka Staropramen</div></div>
+        <div class="menu-price">90 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,30–0,50l Staropramen Nealko / Cool čepovaný</div></div>
+        <div class="menu-price">35–50 Kč</div>
+      </div>
+      <div class="menu-cat-title">Víno &amp; Aperitiv</div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,10l Rozlévané víno dle nabídky</div></div>
+        <div class="menu-price">45 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,10l Rozlévané Prosecco</div></div>
+        <div class="menu-price">55 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,75l Prosecco Brut / Demi</div></div>
+        <div class="menu-price">395 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,75l Prosecco DOCG</div></div>
+        <div class="menu-price">495 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">0,08l Cinzano Rosso / Martini Bianco</div></div>
+        <div class="menu-price">60 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Aperol Spritz / Campari Spritz / Hugo Spritz</div></div>
+        <div class="menu-price">140 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Gin &amp; Tonic / Martini Fiero &amp; Tonic</div></div>
+        <div class="menu-price">140 Kč</div>
+      </div>
+      <div class="menu-row">
+        <div><div class="menu-name">Mimosa</div><div class="menu-desc">Prosecco, pomerančový juice</div></div>
+        <div class="menu-price">95 Kč</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="menu-note">Podrobný seznam alergenů je k dispozici u obsluhy · Šéfkuchař Michal Žamberský · Platné od 1. 4. 2026</p>
+
+  </div>
+
+  <!-- FOTO VPRAVO (sticky) -->
+  <div class="menu-photo">
+    <img src="alacarte.jpg" alt="Á la carte menu — restaurace Smetanova">
+    <div class="menu-photo-overlay"></div>
+  </div>
+
+</section>
+
+<!-- PIZZA STRIP -->
+<div class="pizza-strip">
+  <div class="pizza-img">
+    <img src="pizza.jpg" alt="Pizza z kamenné pece" loading="lazy">
+  </div>
+  <div class="pizza-text">
+    <span class="section-tag" style="color:var(--beige)">Pizza koutek</span>
+    <h2 class="section-h" style="color:var(--white)">Pravá pizza<br><em>z kamenné pece</em></h2>
+    <p>Každá naše pizza začíná od základu — čerstvě připravené těsto, kvalitní suroviny a tradiční kamenná pec, která dělá tu správnou křupavost. Klasické kombinace i odvážnější tipy, které vás překvapí. Pec rozdělávíme <strong style="color:var(--beige)">středu až sobotu</strong> po celý den.</p>
+    <p>A k bowlingu? Objednejte si naše <strong style="color:var(--beige)">pizza tyčinky</strong> — křupavé, voňavé a dostupné v několika lahodných variacích: s česnekem, se slaninou, s mozzarellou nebo se slaninou a mozzarellou dohromady. Přesně to pravé pro dobrou zábavu u dráhy.</p>
+    <a href="https://restaurace-smetanova.rezervujstul.cz/reservation-form.php" target="_blank" rel="noopener" class="btn btn-gold">Rezervovat stůl</a>
+  </div>
+</div>
+
+<!-- SALON -->
+<section id="salon">
+  <div class="salon-text">
+    <div class="reveal">
+      <span class="section-tag" style="color:var(--beige)">Privátní prostory</span>
+      <h2 class="section-h" style="color:var(--white)">Salonek pro <em>vaši</em> akci</h2>
+      <div class="divider"></div>
+    </div>
+    <p class="reveal d1">Plánujete firemní večírek, rodinnou slavnost, narozeniny nebo teambuilding? Náš salonek pojme až <strong style="color:var(--beige)">70 hostů při sezení</strong> nebo <strong style="color:var(--beige)">40 hostů s tanečním parketem</strong> a nabízí plný servis včetně catering menu, přizpůsobeného přesně vašim požadavkům.</p>
+    <p class="reveal d2">K dispozici máme také bowlingové dráhy přímo v areálu — ideální doplněk pro každou firemní nebo soukromou akci.</p>
+    <div class="salon-features reveal d3">
+      <div class="salon-feature">
+        <div class="salon-feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="salon-feature-title">až 70 hostů</div>
+        <div class="salon-feature-desc">Sezení, nebo 40 osob s tanečním parketem</div>
+      </div>
+      <div class="salon-feature">
+        <div class="salon-feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="salon-feature-title">Rezervace na míru</div>
+        <div class="salon-feature-desc">Firemní večírky, oslavy, svatby, teambuildnig</div>
+      </div>
+      <div class="salon-feature">
+        <div class="salon-feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <div class="salon-feature-title">Catering na míru</div>
+        <div class="salon-feature-desc">Menu sestavíme přesně podle vašich přání</div>
+      </div>
+      <div class="salon-feature">
+        <div class="salon-feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <div class="salon-feature-title">Bowling v areálu</div>
+        <div class="salon-feature-desc">Skvělý doplněk pro každou firemní akci</div>
+      </div>
+    </div>
+    <div style="margin-top:36px" class="reveal">
+      <a href="#reserve" class="btn btn-gold">Poptat salonek</a>
+    </div>
+  </div>
+  <div class="salon-image">
+    <div class="salon-tag-img">Salonek</div>
+    <img src="salonek2.jpg" alt="Salonek — catering" loading="lazy">
+  </div>
+</section>
+<!-- BOWLING -->
+<section id="bowling">
+
+  <!-- FOTO VLEVO (sticky) -->
+  <div class="bowling-image">
+    <img src="bowling2.jpg" alt="Bowling — Restaurace Smetanova" loading="lazy">
+  </div>
+
+  <!-- TEXT VPRAVO -->
+  <div class="bowling-text">
+    <div class="reveal">
+      <span class="section-tag" style="color:var(--beige)">Zábava pro celou rodinu</span>
+      <h2 class="section-h" style="color:var(--white)">Bowling <em>u nás</em></h2>
+      <div class="divider"></div>
+    </div>
+    <p class="reveal d1">Čtyři moderní dráhy, tři z nich přizpůsobené i pro nejmenší. Ať přijdete s rodinou, partou přátel nebo celým týmem — <strong style="color:var(--beige)">u nás si přijde na své každý</strong>.</p>
+    <p class="reveal d2">Bowlingovou obuv si půjčíte <strong style="color:var(--beige)">zdarma</strong>, ponožky za 10 Kč. Přímo u dráhy si objednáte <strong style="color:var(--beige)">pití a lehké snacky</strong>. Chystáte se i na oběd nebo večeři? Rezervujte si rovnou i stůl v restauraci — je to jen pár kroků.</p>
+
+    <div style="margin-top:36px" class="reveal">
+      <a href="https://restaurace-smetanova.rezervujstul.cz/reservation-form.php" target="_blank" rel="noopener" class="btn btn-gold">Rezervovat dráhu</a>
+    </div>
+  </div>
+
+</section>
+
+
+
+<!-- EVENTS -->
+<section id="events">
+  <div style="text-align:center" class="reveal">
+    <span class="section-tag" style="justify-content:center;display:flex;color:var(--beige-d)">Pořádáme</span>
+    <h2 class="section-h" style="color:#1a1410">Akce &amp; <em style="color:var(--beige-d)">Události</em></h2>
+    <div class="divider" style="margin:18px auto 0;background:var(--beige-d)"></div>
+  </div>
+  <div class="events-grid">
+    <div class="event-card reveal d1">
+      <span class="event-icon">🎂</span>
+      <div class="event-title">Narozeninové oslavy</div>
+      <p class="event-desc">Zorganizujeme nezapomenutelnou oslavu pro vás a vaše blízké. Vlastní sál, catering, dort a kompletní obsluha — vše připravíme za vás.</p>
+      <a href="#reserve" class="event-cta">Nezávazná poptávka</a>
+    </div>
+    <div class="event-card reveal d2">
+      <span class="event-icon">💼</span>
+      <div class="event-title">Firemní akce</div>
+      <p class="event-desc">Teambuildingy, vánoční večírky, firemní obědy i konference. K dispozici bowlingové dráhy a salonek pro 70 hostů.</p>
+      <a href="#reserve" class="event-cta">Poptat termín</a>
+    </div>
+    <div class="event-card reveal d3">
+      <span class="event-icon">💍</span>
+      <div class="event-title">Svatební hostiny</div>
+      <p class="event-desc">Váš nejdůležitější den si zaslouží dokonalý rámec. Připravíme menu na míru, výzdobu a kompletní servis pro váš velký den.</p>
+      <a href="#reserve" class="event-cta">Domluvit schůzku</a>
+    </div>
+  </div>
+</section>
+
+<!-- ONLINE REZERVACE (tmavá) -->
+<section id="reserve">
+  <span class="section-tag">Online rezervace</span>
+  <h2 class="section-h">Zarezervujte si <em>místo</em></h2>
+  <p class="reserve-intro">Stůl, zahradku nebo bowling dráhu zarezervujte okamžitě!</p>
+  <div class="reserve-btns reveal">
+    <a href="https://restaurace-smetanova.rezervujstul.cz/reservation-form.php" target="_blank" rel="noopener" class="reserve-card-btn">
+      <span class="rcb-icon">🍽️</span>
+      <span class="rcb-title">Stůl nebo zahradka</span>
+      <span class="rcb-sub">Online rezervace →</span>
+    </a>
+    <a href="https://restaurace-smetanova.rezervujstul.cz/reservation-form.php" target="_blank" rel="noopener" class="reserve-card-btn">
+      <span class="rcb-icon">🎳</span>
+      <span class="rcb-title">Bowling dráha</span>
+      <span class="rcb-sub">Online rezervace →</span>
+    </a>
+  </div>
+  <p class="reserve-system-note">Zabezpečený systém rezervuj.to</p>
+  <div class="or-call">
+    nebo zavolejte přímo
+    <a href="tel:+420725266150">+420 725 266 150</a>
+  </div>
+</section>
+
+<!-- POPTÁVKOVÝ FORMULÁŘ (světlá) -->
+<section id="poptavka-sekce">
+  <span class="section-tag" style="justify-content:center;display:flex;color:var(--beige-d)">Salonek &amp; větší akce</span>
+  <h2 class="section-h" style="color:#1a1410;text-align:center">Poptávkový <em style="color:var(--beige-d)">formulář</em></h2>
+  <p class="poptavka-intro">Popište nám vaši představu a my se vám ozveme do 24 hodin.<br>Poptávka bude zaslána přímo vedoucí restaurace.</p>
+  <form class="poptavka-form" name="poptavka" netlify netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="poptavka">
+    <p style="display:none"><input name="bot-field"></p>
+    <input type="text" name="jmeno" placeholder="Jméno a příjmení" required>
+    <input type="tel" name="telefon" placeholder="Telefon" required>
+    <input type="email" name="email" placeholder="E-mail" required>
+    <input type="date" name="datum" title="Preferované datum akce" required>
+    <select name="typ_akce">
+      <option value="" disabled selected>Typ akce</option>
+      <option>Salonek — soukromá oslava</option>
+      <option>Salonek — firemní akce</option>
+      <option>Teambuilding + bowling</option>
+      <option>Vánoční večírek</option>
+      <option>Konference / seminář</option>
+      <option>Jiné</option>
+    </select>
+    <select name="pocet_hostu">
+      <option value="" disabled selected>Počet hostů</option>
+      <option>do 20 osob</option>
+      <option>21–40 osob</option>
+      <option>41–60 osob</option>
+      <option>61–80 osob</option>
+      <option>80+ osob</option>
+    </select>
+    <textarea name="zprava" class="full" placeholder="Popište svou představu — program, catering, čas konání…"></textarea>
+    <button type="submit" class="btn btn-gold">Odeslat poptávku</button>
+
+  </form>
+</section>
+
+<!-- INFO -->
+<div id="info">
+  <div class="info-block reveal">
+    <h3>Otevírací doba</h3>
+    <address>
+      Pondělí – Čtvrtek: 11:00 – 20:30<br>
+      Pátek – Sobota: 11:00 – 22:00<br>
+      Neděle: 11:00 – 17:00
+    </address>
+  </div>
+  <div class="info-block reveal d1">
+    <h3>Adresa</h3>
+    <address>
+      Smetanova obchodní galerie, 3. patro<br>
+      Restaurace a Bowling Smetanova<br>
+      Smetanova 2360<br>
+      755 01 Vsetín<br><br>
+      <a href="https://maps.google.com" target="_blank">Zobrazit na mapě →</a>
+    </address>
+  </div>
+  <div class="info-block reveal d2">
+    <h3>Kontakt</h3>
+    <p>
+      <a href="tel:+420725266150">+420 725 266 150</a><br>
+      <a href="mailto:restaurace@galerievsetin.cz">restaurace@galerievsetin.cz</a><br><br>
+      <div class="social-links">
+        <a href="https://www.instagram.com/restaurace_bowling_smetanova/" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/restauracesmetanova/?locale=cs_CZ" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+      </div>
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="footer-logo">restaurace <em>smetanova</em></a>
+  <p>© 2026 Restaurace Smetanova · Vsetín · Všechna práva vyhrazena</p>
+</footer>
+
+<div id="toast" style="
+  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--beige);color:var(--black);
+  padding:16px 36px;font-size:13px;letter-spacing:1px;
+  z-index:999;opacity:0;transition:.4s;pointer-events:none;
+  font-family:'Jost',sans-serif;
+">✓ Rezervace odeslána — ozveme se do 24 hodin!</div>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+// Hamburger
+const burger=document.getElementById('burger');
+const nl=document.getElementById('nav-links');
+burger.addEventListener('click',()=>nl.classList.toggle('open'));
+nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nl.classList.remove('open')));
+
+// Tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    const g=t.closest('#menu');
+    g.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    g.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    g.querySelector('#'+t.dataset.tab).classList.add('on');
+  });
+});
+
+// Reveal
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Form
+function handleSubmit(e){
+  e.preventDefault();
+  const toast=document.getElementById('toast');
+  toast.style.opacity='1';toast.style.transform='translateX(-50%) translateY(0)';
+  setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateX(-50%) translateY(80px)'},4000);
+  e.target.reset();
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.rtab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.rtab-panel').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('panel-' + name).classList.add('on');
+}
+</script>
+
+<script>
+/* ── DENNÍ MENU z menicka.cz ─────────────────────────────────────────────
+   Každý den při načtení stránky stáhne aktuální menu restaurace (ID 7384)
+   a zobrazí ho v sekci #denni-items. Pokud se stažení nezdaří, zůstane
+   zobrazeno poslední ručně zadané menu jako záloha.
+──────────────────────────────────────────────────────────────────────── */
+(async function() {
+  /* Volá vlastní Netlify serverovou funkci — ta stáhne menicka.cz bez CORS */
+  const API = '/.netlify/functions/menu';
+
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  try {
+    const res = await fetch(API, { cache: 'no-store' });
+    if (!res.ok) throw new Error('API ' + res.status);
+    const data = await res.json();
+
+    /* --- datum --------------------------------------------------------- */
+    if (data.datum) {
+      const el = document.querySelector('.denni-date');
+      if (el) el.textContent = data.datum;
+    }
+
+    /* --- položky menu -------------------------------------------------- */
+    const soups = data.soups || [];
+    const mains = data.mains || [];
+    if (!soups.length && !mains.length) return; // nechej zálohu
+
+    let html = '';
+
+    if (soups.length) {
+      html += '<div class="denni-cat">Polévky</div>';
+      soups.forEach(({ name, price }) => {
+        html += `<div class="denni-row">
+                   <div><div class="denni-name">${esc(name)}</div></div>
+                   <div class="denni-price">${esc(price)}</div>
+                 </div>`;
+      });
+    }
+
+    if (mains.length) {
+      html += '<div class="denni-cat">Hlavní jídla</div>';
+      mains.forEach(({ name, price }) => {
+        html += `<div class="denni-row">
+                   <div><div class="denni-name">${esc(name)}</div></div>
+                   <div class="denni-price">${esc(price)}</div>
+                 </div>`;
+      });
+    }
+
+    const container = document.getElementById('denni-items');
+    if (container) container.innerHTML = html;
+
+  } catch (e) {
+    /* Tiché selhání — záloha v HTML zůstane viditelná */
+    console.warn('Denní menu: chyba načítání –', e.message);
+  }
+})();
+</script>
+</body>
+</html>

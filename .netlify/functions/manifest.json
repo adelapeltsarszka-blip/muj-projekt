@@ -1,0 +1,1 @@
+{"functions":[{"bundler":"esbuild","buildData":{"runtimeAPIVersion":1},"mainFile":"/Users/Adel/Downloads/smetanova_web/netlify/functions/menu.js","name":"menu","priority":10,"runtimeVersion":"nodejs20.x","path":"/Users/Adel/Downloads/smetanova_web/.netlify/functions/menu.zip","runtime":"js"}],"system":{"arch":"arm64","platform":"darwin"},"timestamp":1781203505397,"version":1}
