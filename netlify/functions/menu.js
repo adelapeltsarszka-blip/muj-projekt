@@ -14,9 +14,18 @@ exports.handler = async function () {
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-    // menicka.cz používá windows-1250 kódování
     const buffer = await res.arrayBuffer();
-    const html = new TextDecoder('windows-1250').decode(buffer);
+    // menicka.cz nyní posílá obsah v UTF-8
+    const html = new TextDecoder('utf-8').decode(buffer);
+
+    /* Vyčistí text: HTML entity, emoji a sjednocení mezer/nových řádků */
+    const cleanText = (s) =>
+      s
+        .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code)))
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ')
+        .replace(/(\d),\s(\d)/g, '$1,$2')  // "0, 2 l" → "0,2 l"
+        .trim();
 
     /* --- dnešní datum v českém formátu (d.m.yyyy) -------------------- */
     const now = new Date(
@@ -49,7 +58,7 @@ exports.handler = async function () {
       /<li class='polevka'>\s*<div class='polozka'>([\s\S]*?)<\/div>\s*<div class='cena'>([^<]*)<\/div>/g;
     let m;
     while ((m = soupRe.exec(section)) !== null) {
-      soups.push({ name: m[1].trim(), price: m[2].trim() });
+      soups.push({ name: cleanText(m[1]), price: cleanText(m[2]) });
     }
 
     /* --- hlavní jídla -------------------------------------------------- */
@@ -57,13 +66,12 @@ exports.handler = async function () {
     const mainRe =
       /<li class='jidlo'>\s*<div class='polozka'>([\s\S]*?)<\/div>\s*<div class='cena'>([^<]*)<\/div>/g;
     while ((m = mainRe.exec(section)) !== null) {
-      const name = m[1]
-        .replace(/<span class='poradi'>[^<]*<\/span>/g, '')
-        .replace(/^\s*\d+\.\s*/, '')  // záloha: odstraní "7. " pokud zůstalo mimo span
-        .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code))) // emoji &#127829; → 🍕
-        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>') // ostatní entity
-        .trim();
-      mains.push({ name, price: m[2].trim() });
+      const name = cleanText(
+        m[1]
+          .replace(/<span class='poradi'>[^<]*<\/span>/g, '')
+          .replace(/^\s*\d+\.\s*/, '')  // záloha: odstraní "7. " pokud zůstalo mimo span
+      );
+      mains.push({ name, price: cleanText(m[2]) });
     }
 
     return {
